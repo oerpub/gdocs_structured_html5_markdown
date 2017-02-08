@@ -36,7 +36,6 @@ setup(name='oerpub.rhaptoslabs.html_gdocs2cnxml',
           # -*- Extra requirements: -*-
           'pytidylib>=0.2.1',
           'lxml>=2.3',
-          'gdata==2.0.14',
           'readability-lxml',
       ],
       entry_points="""

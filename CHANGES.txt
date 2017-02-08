@@ -1,12 +1,16 @@
 Changelog
 =========
 
+2.0
+---
+- Pure commandline version [therealmarv]
+
 1.1
 ---
 - Get new Google Docs styles working
-  [yingjin] 
+  [yingjin]
 
-1.0 
+1.0
 ---
 
 - Initial Version
