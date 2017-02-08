@@ -7,3 +7,4 @@ src/oerpub/rhaptoslabs/html_gdocs2cnxml/testbed_gdocs_output/*
 .project
 .pydevproject
 .*.sw?
+.vscode/
