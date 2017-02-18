@@ -15,7 +15,7 @@ from functools import partial
 
 current_dir = os.path.dirname(__file__)
 
-XHTML_ENTITIES = os.path.join(current_dir, 'www_gdocs', 'catalog_xhtml', 'catalog.xml')
+XHTML_ENTITIES = os.path.join(current_dir, 'xslt_gdocs_structured_html', 'catalog_xhtml', 'catalog.xml')
 
 download_files_from_google = False
 
