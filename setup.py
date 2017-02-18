@@ -3,11 +3,7 @@ import os
 
 version = '2.0'
 
-long_description = (
-    open('README.rst').read()
-    + '\n' +
-    open('CHANGES.txt').read()
-    + '\n')
+long_description = ('''GDocs converter''')
 
 setup(name='oerpub.rhaptoslabs.html_gdocs2cnxml',
       version=version,
@@ -25,7 +21,6 @@ setup(name='oerpub.rhaptoslabs.html_gdocs2cnxml',
       license='gpl',
       packages=find_packages('src'),
       package_dir = {'': 'src'},
-      namespace_packages=['oerpub', 'oerpub.rhaptoslabs'],
       include_package_data=True,
       zip_safe=False,
       dependency_links = [
@@ -37,6 +32,7 @@ setup(name='oerpub.rhaptoslabs.html_gdocs2cnxml',
           'pytidylib>=0.2.1',
           'lxml>=2.3',
           'readability-lxml',
+          'httplib2'
       ],
       entry_points="""
       # -*- Entry points: -*-
