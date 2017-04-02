@@ -158,7 +158,7 @@ def init_libxml2(xml):
 
 def xslt(xsl, xml):
     # XSLT transformation with libxml2
-    xsl = os.path.join(current_dir, 'www_gdocs', xsl) # TODO: Needs a cleaner solution
+    xsl = os.path.join(current_dir, 'xslt_gdocs_structured_html', xsl) # TODO: Needs a cleaner solution
     style_doc = libxml2.parseFile(xsl)
     style = libxslt.parseStylesheetDoc(style_doc)
     # doc = libxml2.parseFile(afile)) # another way, just for debugging
