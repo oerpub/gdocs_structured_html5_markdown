@@ -1,5 +1,5 @@
 # -*- coding: utf8 -*-
-'''This module converts Google Docs HTML to structured HTML5'''
+"""This module converts Google Docs HTML to structured HTML5"""
 
 import sys
 import os
@@ -14,17 +14,18 @@ from lxml import etree
 import magic
 from functools import partial
 
-current_dir = os.path.dirname(__file__)
+CURRENT_DIR = os.path.dirname(__file__)
 
-XHTML_ENTITIES = os.path.join(current_dir, 'xslt_gdocs_structured_html', 'catalog_xhtml', 'catalog.xml')
+XHTML_ENTITIES = os.path.join(
+    CURRENT_DIR, 'xslt_gdocs_structured_html', 'catalog_xhtml', 'catalog.xml')
 
-download_files_from_google = False
+DOWNLOAD_FILES_FROM_GOOGLE = False
 
 gmath_latex = []
 
-# Tidy up the Google Docs HTML Soup
+
 def tidy2xhtml(html):
-    # HTML Tidy
+    """Use HTML Tidy to tidy up Google Docs HTML"""
     xhtml, errors = tidy_document(html, options={
         'output-xhtml': 1,     # XHTML instead of HTML4
         'indent': 0,           # Don't use indent, add's extra linespace or linefeeds which are big problems
@@ -44,15 +45,23 @@ def tidy2xhtml(html):
     # TODO: parse errors from tidy process
     return xhtml, {}
 
-# Move CSS from stylesheet inside the tags with. BTW: Premailer does this usually for old email clients.
-# Use a special XHTML Premailer which does not destroy the XML structure.
+
 def premail(xhtml):
+    """Move CSS from stylesheet inside the tags itself.
+
+    BTW: Premailer does this usually for old email clients.
+    Use a special XHTML Premailer which does not destroy the XML structure.
+    """
     premailer = xhtmlPremailer(xhtml)
     premailed_xhtml = premailer.transform()
     return premailed_xhtml, {}
 
-# Use Blahtex transformation from TeX to XML. http://gva.noekeon.org/blahtexml/
+
 def tex2mathml(xml):
+    """Use Blahtex transformation from TeX to XML.
+
+    http://gva.noekeon.org/blahtexml/
+    """
     # Do not run blahtex if we are not on Linux or Mac!
     if os.name == 'posix':
         xpathFormulars = etree.XPath('//cnxtra:tex[@tex]', namespaces={'cnxtra':'http://cnxtra'})
@@ -159,7 +168,7 @@ def init_libxml2(xml):
 
 def xslt(xsl, xml):
     # XSLT transformation with libxml2
-    xsl = os.path.join(current_dir, 'xslt_gdocs_structured_html', xsl) # TODO: Needs a cleaner solution
+    xsl = os.path.join(CURRENT_DIR, 'xslt_gdocs_structured_html', xsl) # TODO: Needs a cleaner solution
     style_doc = libxml2.parseFile(xsl)
     style = libxslt.parseStylesheetDoc(style_doc)
     # doc = libxml2.parseFile(afile)) # another way, just for debugging
@@ -183,7 +192,7 @@ def tex2mathml_transform(xml):
 
 # Download Google Docs Images
 def image_puller(xml):
-    if download_files_from_google:
+    if DOWNLOAD_FILES_FROM_GOOGLE:
       image_objects = {}
       etree_xml = etree.fromstring(xml)
       etree_xml, image_objects = download_images(etree_xml)
@@ -233,10 +242,10 @@ def gdocs_to_cnxml(content, kixcontent=None, bDownloadImages=False, debug=False)
         gmath_latex = extract_math_from_kix(kixcontent)
     objects = {}
     xml = content
-    download_files_from_google = bDownloadImages
+    DOWNLOAD_FILES_FROM_GOOGLE = bDownloadImages
     # write input file to debug dir
     if debug: # create for each pass an output file
-        filename = os.path.join(current_dir, 'gdocs_debug', 'input.htm') # TODO: needs a timestamp or something
+        filename = os.path.join(CURRENT_DIR, 'gdocs_debug', 'input.htm') # TODO: needs a timestamp or something
         f = open(filename, 'w')
         f.write(xml)
         f.flush()
@@ -248,7 +257,7 @@ def gdocs_to_cnxml(content, kixcontent=None, bDownloadImages=False, debug=False)
             objects.update(newobjects) # copy newobjects into objects dict
         print "== Pass: %02d | Function: %s | Objects: %s ==" % (i+1, transform, objects.keys())
         if debug: # create for each pass an output file
-            filename = os.path.join(current_dir, 'gdocs_debug', 'pass%02d.xml' % (i+1)) # TODO: needs a timestamp or something
+            filename = os.path.join(CURRENT_DIR, 'gdocs_debug', 'pass%02d.xml' % (i+1)) # TODO: needs a timestamp or something
             f = open(filename, 'w')
             f.write(xml)
             f.flush()
@@ -256,7 +265,7 @@ def gdocs_to_cnxml(content, kixcontent=None, bDownloadImages=False, debug=False)
     # write objects to debug dir
     if debug:
         for image_filename, image in objects.iteritems():
-            image_filename = os.path.join(current_dir, 'gdocs_debug', image_filename) # TODO: needs a timestamp or something
+            image_filename = os.path.join(CURRENT_DIR, 'gdocs_debug', image_filename) # TODO: needs a timestamp or something
             image_file = open(image_filename, 'wb') # write binary, important!
             try:
                 image_file.write(image)

@@ -25,7 +25,7 @@ import subprocess
 import re
 import shutil
 import httplib2
-from gdocs2cnxml import gdocs_to_cnxml
+from gdocs2html5 import gdocs_to_cnxml
 
 TESTBED_INPUT_DIR = "testbed_gdocs"  # the testbed folder
 TESTBED_INPUT_URLS_FILE = "testbed_gdocs_urls.cfg"

@@ -5,3 +5,4 @@ pytidylib
 lxml
 readability-lxml
 httplib2
+PyExecJS
