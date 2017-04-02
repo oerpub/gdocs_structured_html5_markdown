@@ -1,9 +1,10 @@
-#! /usr/bin/env python
+# -*- coding: utf8 -*-
+'''This module converts Google Docs HTML to structured HTML5'''
+
 import sys
 import os
 import re
 import urllib2
-#from urlparse import urlparse
 import subprocess
 import libxml2
 import libxslt
