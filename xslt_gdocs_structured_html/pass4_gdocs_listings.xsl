@@ -4,7 +4,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xh="http://www.w3.org/1999/xhtml"
-  xmlns:cnhtml="http://cnxhtml"
+  xmlns:nohtml="http://nohtml"
   exclude-result-prefixes="xh">
 
 <xsl:output
@@ -13,7 +13,7 @@
   indent="no"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:preserve-space elements="xh:p xh:span xh:li cnhtml:list xh:td xh:a"/>
+<xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a"/>
 
 <!--
 This XSLT adds the level attribute to <lists> and removes margin attribute
@@ -21,20 +21,20 @@ Pass1 transformation is precondition for this pass.
 Before and after this transformation the Google Docs HTML is no valid HTML anymore!
 
 Input example:
-  <cnhtml:list margin="10">1</cnhtml:list>
-  <cnhtml:list margin="15">2</cnhtml:list>
+  <nohtml:list margin="10">1</nohtml:list>
+  <nohtml:list margin="15">2</nohtml:list>
   <somethingelse/>
-  <cnhtml:list margin="33">3</cnhtml:list>
-  <cnhtml:list margin="72">4</cnhtml:list>
-  <cnhtml:list margin="15">5</cnhtml:list>
+  <nohtml:list margin="33">3</nohtml:list>
+  <nohtml:list margin="72">4</nohtml:list>
+  <nohtml:list margin="15">5</nohtml:list>
 
 Output:
-  <cnhtml:list level="1">1</cnhtml:list>
-  <cnhtml:list level="2">2</cnhtml:list>
+  <nohtml:list level="1">1</nohtml:list>
+  <nohtml:list level="2">2</nohtml:list>
   <somethingelse/>
-  <cnhtml:list level="1">3</cnhtml:list>
-  <cnhtml:list level="2">4</cnhtml:list>
-  <cnhtml:list level="1">5</cnhtml:list>
+  <nohtml:list level="1">3</nohtml:list>
+  <nohtml:list level="2">4</nohtml:list>
+  <nohtml:list level="1">5</nohtml:list>
 
 -->
 
@@ -45,30 +45,30 @@ Output:
   </xsl:copy>
 </xsl:template>
 
-<!-- find every cnhtml:list element which has a preceding non-cnhtml:list element -->
-<xsl:template match="cnhtml:list[not(preceding-sibling::*[1][self::cnhtml:list])]">
+<!-- find every nohtml:list element which has a preceding non-nohtml:list element -->
+<xsl:template match="nohtml:list[not(preceding-sibling::*[1][self::nohtml:list])]">
   <!-- now walk recursive through all lists -->
-  <xsl:apply-templates select="self::cnhtml:list" mode="recurse_pass4">
+  <xsl:apply-templates select="self::nohtml:list" mode="recurse_pass4">
     <xsl:with-param name="level1_margin" select="@margin"/>
     <xsl:with-param name="level" select="1"/>
   </xsl:apply-templates>
 </xsl:template>
 
-<!-- remove other cnhtml:list elements, because they are recursive processed -->
-<xsl:template match="cnhtml:list"/>
+<!-- remove other nohtml:list elements, because they are recursive processed -->
+<xsl:template match="nohtml:list"/>
 
-<!-- remove @margin from cnhtml:list -->
-<xsl:template match="cnhtml:list/@margin"/>
+<!-- remove @margin from nohtml:list -->
+<xsl:template match="nohtml:list/@margin"/>
 
 <!-- go recursive through all following lists -->
-<xsl:template match="cnhtml:list" mode="recurse_pass4">
+<xsl:template match="nohtml:list" mode="recurse_pass4">
     <xsl:param name="level1_margin" select="0"/>
     <xsl:param name="level" select="1"/>
 
-    <xsl:variable name="nextStep" select="self::cnhtml:list/following-sibling::*[1][self::cnhtml:list]"/>
+    <xsl:variable name="nextStep" select="self::nohtml:list/following-sibling::*[1][self::nohtml:list]"/>
 
-    <!-- create current cnhtml:list element with its level -->
-    <xsl:apply-templates select="self::cnhtml:list" mode="create_pass4">
+    <!-- create current nohtml:list element with its level -->
+    <xsl:apply-templates select="self::nohtml:list" mode="create_pass4">
       <xsl:with-param name="level" select="$level"/>
     </xsl:apply-templates>
 
@@ -106,16 +106,16 @@ Output:
     </xsl:if>
 </xsl:template>
 
-<!-- create cnhtml:list element with level attribute -->
-<xsl:template match="cnhtml:list" mode="create_pass4">
+<!-- create nohtml:list element with level attribute -->
+<xsl:template match="nohtml:list" mode="create_pass4">
   <xsl:param name="level"/>
-    <cnhtml:list>
+    <nohtml:list>
       <xsl:attribute name="level">
         <xsl:value-of select="$level"/>
       </xsl:attribute>
       <xsl:apply-templates select="@*"/>
         <xsl:apply-templates/>
-    </cnhtml:list>
+    </nohtml:list>
 </xsl:template>
 
 </xsl:stylesheet>

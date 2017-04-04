@@ -4,7 +4,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xh="http://www.w3.org/1999/xhtml"
-  xmlns:cnhtml="http://cnxhtml"
+  xmlns:nohtml="http://nohtml"
   exclude-result-prefixes="xh">
 
 <xsl:output
@@ -13,7 +13,7 @@
   indent="no"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:preserve-space elements="xh:p xh:span xh:li cnhtml:list xh:td xh:a"/>
+<xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a"/>
 
 <!--
 This XSLT removes all <ol> tags because Google Docs uses margins
@@ -25,8 +25,8 @@ Input example:
 </ol>
 
 Output:
-  <cnhtml:list/>
-  <cnhtml:list/>
+  <nohtml:list/>
+  <nohtml:list/>
  -->
 
 <!-- Default: copy everything -->
@@ -48,7 +48,7 @@ Output:
     select="normalize-space(substring-before(substring-after(@style,'margin:'),'pt'))"/>
   <xsl:variable name="list-style-type"
     select="normalize-space(substring-before(substring-after(@style,'list-style-type:'),';'))"/>
-  <cnhtml:list>
+  <nohtml:list>
     <xsl:attribute name="margin">
       <xsl:value-of select="$margin"/>
     </xsl:attribute>
@@ -61,7 +61,7 @@ Output:
       </xsl:attribute>
     </xsl:if>
     <xsl:apply-templates/> <!-- normally nothing will be applied here -->
-  </cnhtml:list>
+  </nohtml:list>
 </xsl:template>
 
 <!-- Rename <li> to <lists>. Add margin attribute for leveling lists in pass 3 -->
@@ -70,7 +70,7 @@ Output:
     select="normalize-space(substring-before(substring-after(@style,'margin-left:'),'pt'))"/>
   <xsl:variable name="list-style-type"
     select="normalize-space(substring-before(substring-after(parent::xh:ol/@style,'list-style-type:'),';'))"/>
-  <cnhtml:list>
+  <nohtml:list>
     <xsl:attribute name="margin">
       <xsl:value-of select="$margin"/>
     </xsl:attribute>
@@ -85,7 +85,7 @@ Output:
     <!-- remove rest of the list attributes like e.g. style, because they are not needed anymore -->
     <!-- <xsl:apply-templates select="@*"/> -->
     <xsl:apply-templates/>
-  </cnhtml:list>
+  </nohtml:list>
 </xsl:template>
 
 
