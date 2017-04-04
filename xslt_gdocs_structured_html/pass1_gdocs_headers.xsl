@@ -5,7 +5,7 @@
   xmlns:exsl="http://exslt.org/common"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xh="http://www.w3.org/1999/xhtml"
-  xmlns:cnhtml="http://cnxhtml"
+  xmlns:nohtml="http://nohtml"
   extension-element-prefixes="exsl"
   exclude-result-prefixes="exsl xh">
 
@@ -15,13 +15,13 @@
   indent="no"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:preserve-space elements="xh:p xh:span xh:li cnhtml:list xh:td xh:a xh:h1 xh:h2 xh:h3 xh:h4 xh:h5 xh:h6"/>
+<xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a xh:h1 xh:h2 xh:h3 xh:h4 xh:h5 xh:h6"/>
 
 <!--
 This XSLT transforms headers and lists of (Google Docs) XHTML.
 
-It transforms all tags: <h1>,<h2>,<h3>,<h4>,<h5>,<h6> to <cnhtml:h level="x">
-e.g. <h1></h1> to <cnhtml:h level="1"></cnhtml:h>
+It transforms all tags: <h1>,<h2>,<h3>,<h4>,<h5>,<h6> to <nohtml:h level="x">
+e.g. <h1></h1> to <nohtml:h level="1"></nohtml:h>
 -->
 
 <!-- Default: copy everything -->
@@ -46,7 +46,7 @@ e.g. <h1></h1> to <cnhtml:h level="1"></cnhtml:h>
 <!-- ======= -->
 
 <!-- Change header to <h level="x"> -->
-<xsl:template match="xh:h1|xh:h2|xh:h3|xh:h4|xh:h5|xh:h6"> 
+<xsl:template match="xh:h1|xh:h2|xh:h3|xh:h4|xh:h5|xh:h6">
   <!-- get title content without comments -->
   <xsl:variable name="title_nodeset">
   	<xsl:apply-templates mode="cleantitle"/>
@@ -54,7 +54,7 @@ e.g. <h1></h1> to <cnhtml:h level="1"></cnhtml:h>
   <xsl:variable name="title_content">
     <xsl:value-of select="normalize-space(exsl:node-set($title_nodeset))"/>
   </xsl:variable>
-  
+
   <xsl:choose>
       <!-- convert empty headers to empty paragraphs -->
       <xsl:when test="string-length($title_content) &lt;= 0">
@@ -69,7 +69,7 @@ e.g. <h1></h1> to <cnhtml:h level="1"></cnhtml:h>
           </p>
       </xsl:when>
       <xsl:otherwise>
-        <cnhtml:h>
+        <nohtml:h>
             <xsl:message>INFO: Renaming HTML header to leveled header</xsl:message>
             <xsl:attribute name="level" >                          <!-- insert level attribute -->
               <xsl:choose>
@@ -94,7 +94,7 @@ e.g. <h1></h1> to <cnhtml:h level="1"></cnhtml:h>
 
             <!-- copy all children which do not have any content -->
             <xsl:apply-templates/>
-        </cnhtml:h>
+        </nohtml:h>
       </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
