@@ -4,7 +4,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xh="http://www.w3.org/1999/xhtml"
-  xmlns:cnhtml="http://cnxhtml"
+  xmlns:nohtml="http://cnxhtml"
   exclude-result-prefixes="xh">
 
 <xsl:output
@@ -13,7 +13,7 @@
   indent="no"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:preserve-space elements="xh:p xh:span xh:li cnhtml:list xh:td xh:a"/>
+<xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a"/>
 
 <!--
 Transforms headers to nested headers.
@@ -24,20 +24,20 @@ A treewalk algorithm is used to get nested headers.
 How to use treewalk in XSLT: http://www.dpawson.co.uk/xsl/sect2/N4486.html#d5509e1105
 
 Input example:
-  <cnhtml:h level="1" titlecontent="Heading1">
+  <nohtml:h level="1" titlecontent="Heading1">
     Heading1
-  </cnhtml:h>
-  <cnhtml:h level="2" titlecontent="Heading2">
+  </nohtml:h>
+  <nohtml:h level="2" titlecontent="Heading2">
     Heading2
-  </cnhtml:h>
+  </nohtml:h>
 
 Output:
-  <cnhtml:h titlecontent="Heading1">
+  <nohtml:h titlecontent="Heading1">
     Heading1
-    <cnhtml:h titlecontent="Heading2">
+    <nohtml:h titlecontent="Heading2">
       Heading2
-    </cnhtml:h>
-  </cnhtml:h>
+    </nohtml:h>
+  </nohtml:h>
 -->
 
 <!-- Default: Copy everything -->
@@ -59,7 +59,7 @@ Output:
 </xsl:template>
 
 <!-- Convert headers into nested headers -->
-<xsl:template match="cnhtml:h" mode="walker_pass2">
+<xsl:template match="nohtml:h" mode="walker_pass2">
   <xsl:param name="level" select="1"/>
   <xsl:variable name="userlevel" select="@level"/>
 
@@ -73,34 +73,34 @@ Output:
 
   <!-- header found with a level greater or the same as the current level? If yes, create a nested header. -->
   <xsl:if test="$userlevel - $level &gt;= 0">
-    <cnhtml:h>
+    <nohtml:h>
       <xsl:apply-templates select="@*"/>
       <xsl:apply-templates/>
       <xsl:apply-templates select="following-sibling::node()[1]" mode="walker_pass2">
         <xsl:with-param name="level" select="$level + 1"/>
       </xsl:apply-templates>
-    </cnhtml:h>
+    </nohtml:h>
   </xsl:if>
 
   <!-- Used for debugging
   <xsl:if test="$userlevel = 6">
-    <xsl:message><xsl:value-of select="preceding-sibling::cnhtml:h[@level &lt; $userlevel][1]"/></xsl:message>
-    <xsl:message><xsl:value-of select="generate-id(preceding-sibling::cnhtml:h[@level &lt; $userlevel][1])"/></xsl:message>
-    <xsl:message><xsl:value-of select="following-sibling::cnhtml:h[@level = $userlevel][1]/preceding-sibling::cnhtml:h[@level &lt; $userlevel][1]"/></xsl:message>
-    <xsl:message><xsl:value-of select="generate-id(following-sibling::cnhtml:h[@level = $userlevel][1]/preceding-sibling::cnhtml:h[@level &lt; $userlevel][1])"/></xsl:message>
+    <xsl:message><xsl:value-of select="preceding-sibling::nohtml:h[@level &lt; $userlevel][1]"/></xsl:message>
+    <xsl:message><xsl:value-of select="generate-id(preceding-sibling::nohtml:h[@level &lt; $userlevel][1])"/></xsl:message>
+    <xsl:message><xsl:value-of select="following-sibling::nohtml:h[@level = $userlevel][1]/preceding-sibling::nohtml:h[@level &lt; $userlevel][1]"/></xsl:message>
+    <xsl:message><xsl:value-of select="generate-id(following-sibling::nohtml:h[@level = $userlevel][1]/preceding-sibling::nohtml:h[@level &lt; $userlevel][1])"/></xsl:message>
     <xsl:message>=============================</xsl:message>
   </xsl:if>
    -->
 
-  <xsl:if test="following-sibling::cnhtml:h[@level = $userlevel][1]"> 					<!-- Is there a following header in the same level? -->
+  <xsl:if test="following-sibling::nohtml:h[@level = $userlevel][1]">         <!-- Is there a following header in the same level? -->
     <!-- This part is very hard to understand:
        It compares if the first preceding header with a lower level is the same as the first preceding header (with a lower level) for the following header with the same level.
        So it keeps sure that there is no lower level header in between the next header with the same level.
        In other words: It keeps sure that the tree is correct and no double tags are created ;)
     -->
-     <xsl:if test="generate-id(preceding-sibling::cnhtml:h[@level &lt; $userlevel][1])
-             = generate-id(following-sibling::cnhtml:h[@level = $userlevel][1]/preceding-sibling::cnhtml:h[@level &lt; $userlevel][1])">
-       <xsl:apply-templates select="following-sibling::cnhtml:h[@level = $userlevel][1]" mode="walker_pass2">
+     <xsl:if test="generate-id(preceding-sibling::nohtml:h[@level &lt; $userlevel][1])
+             = generate-id(following-sibling::nohtml:h[@level = $userlevel][1]/preceding-sibling::nohtml:h[@level &lt; $userlevel][1])">
+       <xsl:apply-templates select="following-sibling::nohtml:h[@level = $userlevel][1]" mode="walker_pass2">
         <xsl:with-param name="level" select="$level"/>
       </xsl:apply-templates>
     </xsl:if>
@@ -115,7 +115,7 @@ Output:
 <xsl:template match="node()" mode="walker_pass2">
   <xsl:param name="level" select="1"/>
   <xsl:apply-templates select="."/>
-  <xsl:if test="not(following-sibling::node()[1]/self::cnhtml:h[@level &lt; $level])">	<!-- Do not process headers with lower level. -->
+  <xsl:if test="not(following-sibling::node()[1]/self::nohtml:h[@level &lt; $level])">  <!-- Do not process headers with lower level. -->
     <xsl:apply-templates select="following-sibling::node()[1]" mode="walker_pass2">
       <xsl:with-param name="level" select="$level"/>
     </xsl:apply-templates>
