@@ -5,7 +5,7 @@
   xmlns:exsl="http://exslt.org/common"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:xh="http://www.w3.org/1999/xhtml"
-  xmlns:cnhtml="http://cnxhtml"
+  xmlns:nohtml="http://nohtml"
   extension-element-prefixes="exsl"
   exclude-result-prefixes="exsl xh">
 
@@ -15,7 +15,7 @@
   indent="no"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:preserve-space elements="xh:p xh:span xh:li cnhtml:list xh:td xh:a"/>
+<xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a"/>
 
 <!--
 This XSLT transforms
@@ -31,33 +31,33 @@ Important if headers always start at level 2 or the first header is not in level
 </xsl:template>
 
 <!-- do not copy @level, it will be calculated/normalized -->
-<xsl:template match="cnhtml:h/@level"/>
+<xsl:template match="nohtml:h/@level"/>
 
 <xsl:variable name="min_level">
-  <xsl:value-of select="//cnhtml:h[not(preceding-sibling::cnhtml:h/@level &lt; @level) and not(following-sibling::cnhtml:h/@level &lt; @level)][1]/@level"/>
+  <xsl:value-of select="//nohtml:h[not(preceding-sibling::nohtml:h/@level &lt; @level) and not(following-sibling::nohtml:h/@level &lt; @level)][1]/@level"/>
 </xsl:variable>
 
 <xsl:variable name="delta_level_one">
   <xsl:value-of select="$min_level - 1"/>
 </xsl:variable>
 
-<xsl:template match="cnhtml:h">
+<xsl:template match="nohtml:h">
   <xsl:variable name="temp_level">
     <xsl:value-of select="@level - $delta_level_one"/>
   </xsl:variable>
-  
+
   <!-- TODO: Quickfix, first header is always level 1. Needs more logic! -->
   <xsl:variable name="new_level">
       <xsl:choose>
-        <xsl:when test="generate-id(.) = generate-id(//cnhtml:h[1])">
+        <xsl:when test="generate-id(.) = generate-id(//nohtml:h[1])">
           <xsl:value-of select="'1'"/>
         </xsl:when>
-        <xsl:otherwise>         
+        <xsl:otherwise>
             <xsl:value-of select="$temp_level"/>
         </xsl:otherwise>
       </xsl:choose>
   </xsl:variable>
-  
+
   <xsl:copy>
   	<xsl:attribute name="level">
   	  <xsl:value-of select="$new_level"/>
