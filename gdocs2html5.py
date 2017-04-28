@@ -218,18 +218,18 @@ TRANSFORM_PIPELINE = [
     tidy2xhtml,                                             # 1
     premail,                                                # 2
     init_libxml2,                                           # 3
-    partial(xslt, 'pass1_gdocs_headers.xsl'),               # 4
-    partial(xslt, 'pass1_part2_new_min_header_level.xsl'),  # 5
+    partial(xslt, 'pass0_gdocs_headers.xsl'),               # 4
+    partial(xslt, 'pass1_new_min_header_level.xsl'),        # 5
     partial(xslt, 'pass2_xhtml_gdocs_headers.xsl'),         # 6
     partial(xslt, 'pass3_gdocs_listings.xsl'),              # 7
     partial(xslt, 'pass4_gdocs_listings.xsl'),              # 8
     partial(xslt, 'pass5_gdocs_listings.xsl'),              # 9
-    partial(xslt, 'pass6_gdocs2html5.xsl'),                 # 11
-    tex2mathml_transform,                                   # 12
-    image_puller,                                           # 13
-    # partial(xslt, 'pass7_cnxml_postprocessing.xsl'),        # 14
-    # partial(xslt, 'pass8_cnxml_id-generation.xsl'),         # 15
-    # partial(xslt, 'pass9_cnxml_postprocessing.xsl')         # 16
+    #TODO: CNXML specific # partial(xslt, 'pass6_gdocs2html5.xsl'),                 # 11
+    #tex2mathml_transform,                                   # 12
+    #image_puller,                                           # 13
+    #TODO: CNXML specific # partial(xslt, 'pass7_cnxml_postprocessing.xsl'),        # 14
+    #TODO: CNXML specific # partial(xslt, 'pass8_cnxml_id-generation.xsl'),         # 15
+    #TODO: CNXML specific # partial(xslt, 'pass9_cnxml_postprocessing.xsl')         # 16
 ]
 
 # the function which is called from outside to start transformation
