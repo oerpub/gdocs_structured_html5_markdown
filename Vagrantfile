@@ -17,9 +17,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get -qqy update
     apt-get install -qy python2.7 python-libxml2 python-libxslt1 python-pip
-    wget -O /tmp/tidy-5.4.0-64bit.deb https://github.com/htacg/tidy-html5/releases/download/5.4.0/tidy-5.4.0-64bit.deb
+    apt-get install -qy blahtexml
+    wget -nv -O /tmp/tidy-5.4.0-64bit.deb https://github.com/htacg/tidy-html5/releases/download/5.4.0/tidy-5.4.0-64bit.deb
     dpkg -i /tmp/tidy-5.4.0-64bit.deb
     rm /tmp/tidy-5.4.0-64bit.deb
-    pip install -r /vagrant/requirements.txt
+    pip install --disable-pip-version-check -r /vagrant/requirements.txt
   SHELL
 end
