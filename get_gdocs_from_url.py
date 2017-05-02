@@ -26,8 +26,7 @@ def _get_html_from_id(doc_id):
     html = ''
     try:
         plain_html_url = 'https://docs.google.com/document/d/%s/export?format=html&confirm=no_antivirus' % doc_id
-        # resp, html = http.request(plain_html_url)
-        html = 'hallo1'
+        resp, html = http.request(plain_html_url)
     except:
         print "Error: Failed to download Google Docs HTML"
     return html
@@ -39,8 +38,7 @@ def _get_kix_from_id(doc_id):
     kix = ''
     try:
         kix_url = 'https://docs.google.com/feeds/download/documents/export/Export?doc_id=%s&exportFormat=kix' % doc_id
-        # resp, kix = http.request(kix_url)
-        kix = "hallo2"
+        resp, kix = http.request(kix_url)
     except:
         print "Error: Failed to download Google Docs Kix"
     return kix
