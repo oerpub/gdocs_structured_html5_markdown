@@ -5,3 +5,5 @@ pytidylib
 lxml
 readability-lxml
 httplib2
+flask
+flask-wtf
