@@ -64,7 +64,7 @@ def tex2mathml(xml):
     """
     # Do not run blahtex if we are not on Linux or Mac!
     if os.name == 'posix':
-        xpathFormulars = etree.XPath('//cnxtra:tex[@tex]', namespaces={'cnxtra':'http://cnxtra'})
+        xpathFormulars = etree.XPath('//nohtml:tex[@tex]', namespaces={'nohtml':'http://nohtml'})
         formularList = xpathFormulars(xml)
         for formular in formularList:
             strTex = urllib2.unquote(formular.get('tex'))
@@ -95,7 +95,7 @@ def tex2mathml(xml):
 def gmath2mathml(xml):
     # Do not run blahtex if we are not on Linux or Mac!
     if os.name == 'posix':
-        xpathFormulars = etree.XPath('//cnxtra:gmath', namespaces={'cnxtra':'http://cnxtra'})
+        xpathFormulars = etree.XPath('//nohtml:gmath', namespaces={'nohtml':'http://nohtml'})
         formularList = xpathFormulars(xml)
         for position, formular in enumerate(formularList):
             try:
@@ -126,7 +126,7 @@ def gmath2mathml(xml):
 # Downloads images from Google Docs and sets metadata for further processing
 def download_images(xml):
     objects = {}    # image contents will be saved here
-    xpathImages = etree.XPath('//cnxtra:image', namespaces={'cnxtra':'http://cnxtra'})
+    xpathImages = etree.XPath('//nohtml:image', namespaces={'nohtml':'http://nohtml'})
     imageList = xpathImages(xml)
     for position, image in enumerate(imageList):
         strImageUrl = image.get('src')
@@ -224,7 +224,7 @@ TRANSFORM_PIPELINE = [
     partial(xslt, 'pass3_gdocs_listings.xsl'),              # 7
     partial(xslt, 'pass4_gdocs_listings.xsl'),              # 8
     partial(xslt, 'pass5_gdocs_listings.xsl'),              # 9
-    #TODO: CNXML specific # partial(xslt, 'pass6_gdocs2html5.xsl'),                 # 11
+    #partial(xslt, 'pass6_gdocs2html5.xsl'),                 # 11
     #tex2mathml_transform,                                   # 12
     #image_puller,                                           # 13
     #TODO: CNXML specific # partial(xslt, 'pass7_cnxml_postprocessing.xsl'),        # 14
