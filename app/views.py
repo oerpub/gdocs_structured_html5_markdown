@@ -1,7 +1,8 @@
 from flask import render_template, flash, redirect
 from app import app
 from .forms import GdocsForm
-from dummy_get_gdocs_from_url import get_gdocs_from_url
+#from dummy_get_gdocs_from_url import get_gdocs_from_url
+from get_gdocs_from_url import get_gdocs_from_url
 from gdocs2html5 import gdocs_to_html5
 
 url = ''
