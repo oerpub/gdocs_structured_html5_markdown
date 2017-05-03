@@ -233,7 +233,7 @@ TRANSFORM_PIPELINE = [
 ]
 
 # the function which is called from outside to start transformation
-def gdocs_to_cnxml(content, kixcontent=None, bDownloadImages=False, debug=False):
+def gdocs_to_html5(content, kixcontent=None, bDownloadImages=False, debug=False):
     global gmath_latex
     if (kixcontent==None):
         gmath_latex = []
