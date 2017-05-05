@@ -415,18 +415,23 @@ Pass1,2...4 transformation is a precondition for this pass.
 <!-- remove empty images -->
 <xsl:template match="xh:img[not(@src)]"/>
 
+<xsl:template match="xh:sup">
+  <sup>
+    <xsl:apply-templates/>
+  </sup>
+</xsl:template>
+
 <!-- links to footnotes -->
-<xsl:template match="xh:sup/xh:a">
+<!--<xsl:template match="xh:sup/xh:a">
   <xsl:variable name="reference">
     <xsl:value-of select="substring(@href, 2)"/>
   </xsl:variable>
-  <!-- Do not create a footnote if reference is a gdocs comment -->
   <xsl:if test="not(starts-with($reference, 'cmnt'))">
     <footnote>
       <xsl:apply-templates select="//xh:div[xh:p/xh:a[@name = $reference]]/xh:p/xh:span"/>
     </footnote>
   </xsl:if>
-</xsl:template>
+</xsl:template>-->
 
 <!-- Look for TeX Formulars from Google Chart Tools -->
 <xsl:template match="xh:img[
@@ -478,7 +483,11 @@ Pass1,2...4 transformation is a precondition for this pass.
 </xsl:template>
 -->
 
-<!-- ignore div -->
-<xsl:template match="xh:div"/>
+<!-- footer div -->
+<xsl:template match="xh:div">
+  <footer>
+    <xsl:apply-templates/>
+  </footer>
+</xsl:template>
 
 </xsl:stylesheet>
