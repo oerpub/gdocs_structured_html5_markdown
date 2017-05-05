@@ -263,36 +263,54 @@ Pass1,2...4 transformation is a precondition for this pass.
           <xsl:choose>
             <xsl:when test="@level = 1">
                   <h1>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                     <xsl:value-of select="@title"/>
                   </h1>
                   <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="@level = 2">
                 <h2>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                   <xsl:value-of select="@title"/>
                 </h2>
                 <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="@level = 3">
                 <h3>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                   <xsl:value-of select="@title"/>
                 </h3>
                 <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="@level = 4">
                 <h4>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                   <xsl:value-of select="@title"/>
                 </h4>
                 <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="@level = 5">
                 <h5>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                   <xsl:value-of select="@title"/>
                 </h5>
                 <xsl:apply-templates/>
             </xsl:when>
             <xsl:when test="@level &gt;=6">
                 <h6>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                   <xsl:value-of select="@title"/>
                 </h6>
                 <xsl:apply-templates/>
@@ -301,6 +319,9 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <!-- should not happen-->
                 <xsl:message>Unrecognized header level found!</xsl:message>
                 <h6>
+                    <xsl:attribute name="id">
+                      <xsl:value-of select="@id"/>
+                    </xsl:attribute>
                   <xsl:value-of select="@title"/>
                 </h6>
                 <xsl:apply-templates/>
