@@ -242,45 +242,54 @@ Pass1,2...4 transformation is a precondition for this pass.
       <!-- TODO: nohtml:h without title should not happen -->
       <xsl:if test="@title">
 
-        <xsl:choose>
-          <xsl:when test="@level = 1">
-              <h1>
+        <section>
+          <xsl:choose>
+            <xsl:when test="@level = 1">
+                  <h1>
+                    <xsl:value-of select="@title"/>
+                  </h1>
+                  <xsl:apply-templates/>
+            </xsl:when>
+            <xsl:when test="@level = 2">
+                <h2>
+                  <xsl:value-of select="@title"/>
+                </h2>
                 <xsl:apply-templates/>
-              </h1>
-          </xsl:when>
-          <xsl:when test="@level = 2">
-              <h2>
+            </xsl:when>
+            <xsl:when test="@level = 3">
+                <h3>
+                  <xsl:value-of select="@title"/>
+                </h3>
                 <xsl:apply-templates/>
-              </h2>
-          </xsl:when>
-          <xsl:when test="@level = 3">
-              <h3>
+            </xsl:when>
+            <xsl:when test="@level = 4">
+                <h4>
+                  <xsl:value-of select="@title"/>
+                </h4>
                 <xsl:apply-templates/>
-              </h3>
-          </xsl:when>
-          <xsl:when test="@level = 4">
-              <h4>
+            </xsl:when>
+            <xsl:when test="@level = 5">
+                <h5>
+                  <xsl:value-of select="@title"/>
+                </h5>
                 <xsl:apply-templates/>
-              </h4>
-          </xsl:when>
-          <xsl:when test="@level = 5">
-              <h5>
+            </xsl:when>
+            <xsl:when test="@level &gt;=6">
+                <h6>
+                  <xsl:value-of select="@title"/>
+                </h6>
                 <xsl:apply-templates/>
-              </h5>
-          </xsl:when>
-          <xsl:when test="@level &gt;=6">
-              <h6>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- should not happen-->
+                <xsl:message>Unrecognized header level found!</xsl:message>
+                <h6>
+                  <xsl:value-of select="@title"/>
+                </h6>
                 <xsl:apply-templates/>
-              </h6>
-          </xsl:when>
-          <xsl:otherwise>
-              <!-- should not happen-->
-              <xsl:message>Unrecognized header level found!</xsl:message>
-              <h6>
-                <xsl:apply-templates/>
-              </h6>
-          </xsl:otherwise>
-        </xsl:choose>
+            </xsl:otherwise>
+          </xsl:choose>
+        </section>
       </xsl:if>
     </xsl:otherwise>
   </xsl:choose>
