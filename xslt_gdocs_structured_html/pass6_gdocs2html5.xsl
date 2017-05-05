@@ -333,9 +333,9 @@ Pass1,2...4 transformation is a precondition for this pass.
       <xsl:choose>
         <xsl:when test="parent::xh:ol/@start">
           <ol>
-                <xsl:attribute name="start">
-                  <xsl:value-of select="parent::xh:ol/@start"/>
-                </xsl:attribute>
+              <xsl:attribute name="start">
+                <xsl:value-of select="parent::xh:ol/@start"/>
+              </xsl:attribute>
               <li>
                 <xsl:apply-templates/>
               </li>
@@ -390,41 +390,19 @@ Pass1,2...4 transformation is a precondition for this pass.
 
 <!-- links -->
 <xsl:template match="xh:a">
-  <xsl:if test="@href">
-    <xsl:choose>
-      <!-- internal link -->
-      <xsl:when test="substring(@href, 1, 1) = '#'">
-        <link>
-          <xsl:attribute name="bookmark">
-            <xsl:value-of select="@href"/>
-          </xsl:attribute>
-          <xsl:apply-templates/>
-        </link>
-      </xsl:when>
-      <!-- external link -->
-      <xsl:otherwise>
-        <link>
-          <xsl:attribute name="url">
-            <xsl:value-of select="@href"/> <!-- link url -->
-           </xsl:attribute>
-          <!-- open external links default in new window if they are no emails-->
-          <xsl:if test="not(starts-with(@href, 'mailto'))">
-            <xsl:attribute name="window">new</xsl:attribute>
-          </xsl:if>
-          <xsl:apply-templates/>
-        </link>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:if>
-  <!-- create a "bookmark" for internal links -->
-  <xsl:if test="@name">
-    <nohtml:bookmark>
+  <a>
+    <xsl:if test="@name">
       <xsl:attribute name="name">
         <xsl:value-of select="@name"/>
       </xsl:attribute>
-      <xsl:apply-templates/>
-    </nohtml:bookmark>
-  </xsl:if>
+    </xsl:if>
+    <xsl:if test="@href">
+      <xsl:attribute name="href">
+        <xsl:value-of select="@href"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </a>
 </xsl:template>
 
 <!-- images -->

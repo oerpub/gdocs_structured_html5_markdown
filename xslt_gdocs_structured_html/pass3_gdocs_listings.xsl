@@ -37,8 +37,8 @@ Output:
 </xsl:template>
 
 <!-- Remove <ol> tags. Later all <li> will be rearranged by their margin -->
-<xsl:template match="xh:ol">
-  <xsl:message>INFO: Removing ol</xsl:message>
+<xsl:template match="xh:ol|xh:ul">
+  <xsl:message>INFO: Removing ol or ul</xsl:message>
   <xsl:apply-templates/>                <!-- just copy all children -->
 </xsl:template>
 
