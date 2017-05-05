@@ -19,6 +19,20 @@ def _get_doc_id_from_url(url):
         return match_doc_id.group(1)
     return ''
 
+def _match_localhost(url):
+    ''' for debugging only '''
+    result = False
+    match_doc_id = re.match(r'^.*(localhost|127\.0\.0\.1).*$', url)
+    if match_doc_id:
+        result = True
+    return result
+
+def _download_from_url(url):
+    ''' for debugging only '''
+    http = httplib2.Http()
+    http.follow_redirects = False
+    resp, html = http.request(url)
+    return html
 
 def _get_html_from_id(doc_id):
     http = httplib2.Http()
@@ -50,4 +64,8 @@ def get_gdocs_from_url(url):
         html = _get_html_from_id(doc_id)
         kix = _get_kix_from_id(doc_id)
         return html, kix
-    return '', ''
+    elif _match_localhost(url):     # for debugging only
+        html = _download_from_url(url)
+        return html, ''
+    else:
+        return '', ''
