@@ -31,27 +31,29 @@ Pass1,2...4 transformation is a precondition for this pass.
 <!-- HTML -->
 <xsl:template match="xh:html">
   <xsl:apply-templates select="xh:head"/>
-  <content>
-    <!--<xsl:apply-templates select="xh:body"/>-->
-  </content>
+  <body>
+    <xsl:apply-templates select="xh:body"/>
+  </body>
 </xsl:template>
 
 <!-- Get the title out of the header -->
 <xsl:template match="xh:head">
   <!-- if document title is missing, Rhaptos creates error in metadata! -->
-  <title>
-    <xsl:variable name="document_title">
-      <xsl:value-of select="normalize-space(xh:title)"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="string-length($document_title) &gt; 0">
-        <xsl:value-of select="$document_title"/>
-      </xsl:when>
-      <xsl:otherwise> <!-- create "untitled" as title text -->
-        <xsl:text>Untitled</xsl:text>
-      </xsl:otherwise>
-    </xsl:choose>
-  </title>
+  <head>
+    <title>
+      <xsl:variable name="document_title">
+        <xsl:value-of select="normalize-space(xh:title)"/>
+      </xsl:variable>
+      <xsl:choose>
+        <xsl:when test="string-length($document_title) &gt; 0">
+          <xsl:value-of select="$document_title"/>
+        </xsl:when>
+        <xsl:otherwise> <!-- create "untitled" as title text -->
+          <xsl:text>Untitled</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </title>
+  </head>
 </xsl:template>
 
 <!-- HTML body -->
@@ -137,7 +139,7 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
                   <xsl:with-param name="replace" select="'vertical-align:sub'"/>
-                </xsl:call-template>                
+                </xsl:call-template>
             </xsl:variable>
             <xsl:call-template name="apply-emphasis">
                 <xsl:with-param name="style" select="$nosub"/>
@@ -151,7 +153,7 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
                   <xsl:with-param name="replace" select="'font-style:italic'"/>
-                </xsl:call-template>                
+                </xsl:call-template>
             </xsl:variable>
             <xsl:call-template name="apply-emphasis">
                 <xsl:with-param name="style" select="$noitalic"/>
@@ -165,7 +167,7 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
                   <xsl:with-param name="replace" select="'font-weight:bold'"/>
-                </xsl:call-template>                
+                </xsl:call-template>
             </xsl:variable>
             <xsl:call-template name="apply-emphasis">
                 <xsl:with-param name="style" select="$nobold"/>
@@ -236,7 +238,7 @@ Pass1,2...4 transformation is a precondition for this pass.
     </xsl:when>
     <xsl:otherwise>
 		  <!-- Check if header is empty, if yes, create no section -->
-		  
+
           <!-- TODO: nohtml:h without title should not happen -->
           <xsl:if test="@title">
 			  <section>
@@ -314,7 +316,7 @@ Pass1,2...4 transformation is a precondition for this pass.
               <xsl:attribute name="start-value">
                 <xsl:value-of select="parent::xh:ol/@start"/>
               </xsl:attribute>
-            </xsl:if>            
+            </xsl:if>
           </xsl:when>
           <xsl:when test="$my_style = 'lower-roman'">
             <xsl:attribute name="list-type">enumerated</xsl:attribute>
