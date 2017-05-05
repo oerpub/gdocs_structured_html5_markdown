@@ -13,9 +13,19 @@
         <p><input type="submit" value="convert"></p>
     </form>
 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        <li>{{ messages[0] }} </li>
+    </ul>
+    {% endif %}
 
     <h2>HTML Output</h2>
-    <p>
-      {{ gdocshtml }}
-    </p>
+    {% if messages %}
+    <pre>{{ messages[1] }}</pre>
+    {% endif %}
+    <h2>Markdown Output</h2>
+    
+    {% endwith %}
+
 {% endblock %}

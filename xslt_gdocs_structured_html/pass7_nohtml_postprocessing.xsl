@@ -10,7 +10,7 @@
   extension-element-prefixes="exsl"
   exclude-result-prefixes="exsl xh nohtml">
 
-<xsl:output method="xml" encoding="UTF-8" indent="no"/>
+<xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 
 <xsl:strip-space elements="*"/>
 <xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a"/>

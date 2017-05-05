@@ -19,6 +19,7 @@ def index():
         url = form.gdocs.data
         gdocs_dirty_html, kix = get_gdocs_from_url(url)
         transformed, objects = gdocs_to_html5(gdocs_dirty_html, kixcontent=None, bDownloadImages=False, debug=True)
+        flash(transformed)
         return redirect('/')
 
     return render_template('index.html',
