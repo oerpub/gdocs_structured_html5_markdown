@@ -7,12 +7,12 @@
   xmlns:exsl="http://exslt.org/common"
   version="1.0"
   extension-element-prefixes="exsl"
-  exclude-result-prefixes="exsl xh cnhtml nohtml">
+  exclude-result-prefixes="exsl xh nohtml">
 
 <xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
 <xsl:strip-space elements="*"/>
-<xsl:preserve-space elements="xh:p xh:span xh:li cnhtml:list xh:td xh:a"/>
+<xsl:preserve-space elements="xh:p xh:span xh:li nohtml:list xh:td xh:a"/>
 
 <!--
 This XSLT transforms Google Docs HTML tags to CNXML.
@@ -197,7 +197,7 @@ Pass1,2...4 transformation is a precondition for this pass.
 <xsl:template match="xh:span">
   <xsl:choose>
     <!-- Do we have a header? Then do not apply any emphasis to the <title> -->
-     <xsl:when test="parent::cnhtml:h">
+     <xsl:when test="parent::nohtml:h">
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:when test="node()[self::xh:a]">
@@ -224,7 +224,7 @@ Pass1,2...4 transformation is a precondition for this pass.
 </xsl:template>
 
 <!-- headers -->
-<xsl:template match="cnhtml:h">
+<xsl:template match="nohtml:h">
   <xsl:choose>
     <!-- do not create a section if we are inside tables -->
     <xsl:when test="ancestor::xh:td">
@@ -237,7 +237,7 @@ Pass1,2...4 transformation is a precondition for this pass.
     <xsl:otherwise>
 		  <!-- Check if header is empty, if yes, create no section -->
 		  
-          <!-- TODO: cnhtml:h without title should not happen -->
+          <!-- TODO: nohtml:h without title should not happen -->
           <xsl:if test="@title">
 			  <section>
 			    <title>
