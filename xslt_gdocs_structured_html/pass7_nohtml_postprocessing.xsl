@@ -42,58 +42,29 @@ Deprecated:
 
 <!-- convert images to html -->
 <xsl:template match="nohtml:image">
-  <xsl:choose>
-    <xsl:when test="text()">
-      <media>
+      <img>
         <xsl:attribute name="alt">
           <xsl:value-of select="@alt"/>
         </xsl:attribute>
-        <image>
-          <xsl:attribute name="mime-type">
-            <xsl:value-of select="@mime-type"/>
-          </xsl:attribute>
-          <xsl:attribute name="src">
-            <xsl:value-of select="."/>
-          </xsl:attribute>
-          <xsl:if test="@height &gt; 0">
-            <xsl:attribute name="height">
-              <xsl:value-of select="@height"/>
-            </xsl:attribute>
-          </xsl:if>
-          <xsl:if test="@width &gt; 0">
-            <xsl:attribute name="width">
-              <xsl:value-of select="@width"/>
-            </xsl:attribute>
-          </xsl:if>
-        </image>
-      </media>
-    </xsl:when>
-    <xsl:otherwise>
-      <media>
-        <xsl:attribute name="alt">
-          <xsl:value-of select="@alt"/>
+        <!--<xsl:attribute name="mime-type">
+          <xsl:value-of select="@mime-type"/>
+        </xsl:attribute>-->
+        <xsl:attribute name="src">
+          <xsl:value-of select="@src"/>
         </xsl:attribute>
-        <image>
-          <xsl:attribute name="mime-type">
-            <xsl:value-of select="@mime-type"/>
+        <xsl:if test="@height &gt; 0">
+          <xsl:attribute name="height">
+            <xsl:value-of select="@height"/>
+            <xsl:text>px</xsl:text>
           </xsl:attribute>
-          <xsl:attribute name="src">
-            <xsl:value-of select="@src"/>
+        </xsl:if>
+        <xsl:if test="@width &gt; 0">
+          <xsl:attribute name="width">
+            <xsl:value-of select="@width"/>
+            <xsl:text>px</xsl:text>
           </xsl:attribute>
-          <xsl:if test="@height &gt; 0">
-            <xsl:attribute name="height">
-              <xsl:value-of select="@height"/>
-            </xsl:attribute>
-          </xsl:if>
-          <xsl:if test="@width &gt; 0">
-            <xsl:attribute name="width">
-              <xsl:value-of select="@width"/>
-            </xsl:attribute>
-          </xsl:if>
-        </image>
-      </media>
-    </xsl:otherwise>
-  </xsl:choose>
+        </xsl:if>
+      </img>
 </xsl:template>
 
 <!-- remove empty tex nodes (this should not happen) -->
