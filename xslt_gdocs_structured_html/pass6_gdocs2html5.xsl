@@ -119,7 +119,8 @@ Pass1,2...4 transformation is a precondition for this pass.
     <xsl:param name="child_node"/>
     <xsl:choose>
         <xsl:when test="contains($style, 'vertical-align:super')">
-          <sup>
+          <span>
+            <xsl:attribute name="style">vertical-align:super</xsl:attribute>
             <xsl:variable name="nosuper">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -131,10 +132,11 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nosuper"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </sup>
+          </span>
         </xsl:when>
         <xsl:when test="contains($style, 'vertical-align:sub')">
-          <sub>
+          <span>
+            <xsl:attribute name="style">vertical-align:sub</xsl:attribute>
             <xsl:variable name="nosub">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -145,10 +147,11 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nosub"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </sub>
+          </span>
         </xsl:when>
         <xsl:when test="contains($style, 'font-style:italic')">
-          <emphasis effect='italics'>
+          <span>
+            <xsl:attribute name="style">font-style:italic</xsl:attribute>
             <xsl:variable name="noitalic">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -159,10 +162,11 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$noitalic"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </emphasis>
+          </span>
         </xsl:when>
         <xsl:when test="contains($style, 'font-weight:bold')">
-          <emphasis effect='bold'>
+          <span>
+            <xsl:attribute name="style">font-weight:bold</xsl:attribute>
             <xsl:variable name="nobold">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -173,10 +177,11 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nobold"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </emphasis>
+          </span>
         </xsl:when>
         <xsl:when test="contains($style, 'text-decoration:underline')">
-          <emphasis effect='underline'>
+          <span>
+            <xsl:attribute name="style">text-decoration:underline</xsl:attribute>
             <xsl:variable name="nounderline">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -187,7 +192,7 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nounderline"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </emphasis>
+          </span>
         </xsl:when>
         <xsl:otherwise>
             <xsl:apply-templates select="$child_node"/>
@@ -234,14 +239,13 @@ Pass1,2...4 transformation is a precondition for this pass.
       <xsl:apply-templates/>
     </xsl:when>
     <xsl:when test="ancestor::xh:li">
-      <para><emphasis effect="bold"><xsl:apply-templates/></emphasis></para>
+      <para><span style="font-weight:bold"><xsl:apply-templates/></span></para>
     </xsl:when>
     <xsl:otherwise>
       <!-- Check if header is empty, if yes, create no section -->
 
       <!-- TODO: nohtml:h without title should not happen -->
       <xsl:if test="@title">
-
         <section>
           <xsl:choose>
             <xsl:when test="@level = 1">
@@ -411,34 +415,17 @@ Pass1,2...4 transformation is a precondition for this pass.
 
 <!-- table body -->
 <xsl:template match="xh:tbody">
-  <tgroup>
-    <xsl:attribute name="cols">
-      <!-- get number of column from the first row -->
-      <xsl:value-of select="count(xh:tr[1]/xh:td)"/>
-    </xsl:attribute>
-    <!-- get column width -->
-    <xsl:for-each select="xh:tr[1]/xh:td">
-      <colspec>
-        <xsl:attribute name="colnum">
-          <xsl:value-of select="position()"/>
-        </xsl:attribute>
-        <xsl:attribute name="colwidth">
-          <xsl:value-of select="@width"/>
-        </xsl:attribute>
-      </colspec>
+  <tbody>
+    <xsl:for-each select="xh:tr">
+      <row>
+        <xsl:for-each select="xh:td">
+          <entry>
+            <xsl:apply-templates select="*"/>
+          </entry>
+        </xsl:for-each>
+      </row>
     </xsl:for-each>
-    <tbody>
-      <xsl:for-each select="xh:tr">
-        <row>
-          <xsl:for-each select="xh:td">
-            <entry>
-              <xsl:apply-templates select="*"/>
-            </entry>
-          </xsl:for-each>
-        </row>
-      </xsl:for-each>
-    </tbody>
-  </tgroup>
+  </tbody>
 </xsl:template>
 
 <!-- links -->
