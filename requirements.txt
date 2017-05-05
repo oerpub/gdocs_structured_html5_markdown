@@ -7,3 +7,4 @@ readability-lxml
 httplib2
 flask
 flask-wtf
+html2text
