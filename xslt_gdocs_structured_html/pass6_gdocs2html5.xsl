@@ -119,7 +119,7 @@ Pass1,2...4 transformation is a precondition for this pass.
     <xsl:param name="child_node"/>
     <xsl:choose>
         <xsl:when test="contains($style, 'vertical-align:super')">
-          <span>
+          <sup>
             <xsl:attribute name="style">vertical-align:super</xsl:attribute>
             <xsl:variable name="nosuper">
                 <xsl:call-template name="string-replace-all">
@@ -132,10 +132,10 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nosuper"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </span>
+          </sup>
         </xsl:when>
         <xsl:when test="contains($style, 'vertical-align:sub')">
-          <span>
+          <sub>
             <xsl:attribute name="style">vertical-align:sub</xsl:attribute>
             <xsl:variable name="nosub">
                 <xsl:call-template name="string-replace-all">
@@ -147,7 +147,7 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nosub"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </span>
+          </sub>
         </xsl:when>
         <xsl:when test="contains($style, 'font-style:italic')">
           <span>
