@@ -150,8 +150,7 @@ Pass1,2...4 transformation is a precondition for this pass.
           </sub>
         </xsl:when>
         <xsl:when test="contains($style, 'font-style:italic')">
-          <span>
-            <xsl:attribute name="style">font-style:italic</xsl:attribute>
+          <em>
             <xsl:variable name="noitalic">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -162,11 +161,10 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$noitalic"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </span>
+          </em>
         </xsl:when>
         <xsl:when test="contains($style, 'font-weight:bold')">
-          <span>
-            <xsl:attribute name="style">font-weight:bold</xsl:attribute>
+          <strong>
             <xsl:variable name="nobold">
                 <xsl:call-template name="string-replace-all">
                   <xsl:with-param name="text" select="$style"/>
@@ -177,7 +175,21 @@ Pass1,2...4 transformation is a precondition for this pass.
                 <xsl:with-param name="style" select="$nobold"/>
                 <xsl:with-param name="child_node" select="$child_node"/>
             </xsl:call-template>
-          </span>
+          </strong>
+        </xsl:when>
+        <xsl:when test="contains($style, 'font-weight:700')">
+          <strong>
+            <xsl:variable name="nobold">
+                <xsl:call-template name="string-replace-all">
+                  <xsl:with-param name="text" select="$style"/>
+                  <xsl:with-param name="replace" select="'font-weight:700'"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:call-template name="apply-emphasis">
+                <xsl:with-param name="style" select="$nobold"/>
+                <xsl:with-param name="child_node" select="$child_node"/>
+            </xsl:call-template>
+          </strong>
         </xsl:when>
         <xsl:when test="contains($style, 'text-decoration:underline')">
           <span>
@@ -417,7 +429,7 @@ Pass1,2...4 transformation is a precondition for this pass.
 
 <xsl:template match="xh:sup">
   <sup>
-    <xsl:apply-templates/>
+    
   </sup>
 </xsl:template>
 
