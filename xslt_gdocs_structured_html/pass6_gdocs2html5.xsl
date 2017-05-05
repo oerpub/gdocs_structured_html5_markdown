@@ -33,6 +33,7 @@ Pass1,2...4 transformation is a precondition for this pass.
   <xsl:apply-templates select="xh:head"/>
   <body>
     <xsl:apply-templates select="xh:body"/>
+    <xsl:call-template name="generate-footer"/>
   </body>
 </xsl:template>
 
@@ -495,11 +496,17 @@ Pass1,2...4 transformation is a precondition for this pass.
 </xsl:template>
 -->
 
-<!-- footer div -->
-<xsl:template match="xh:div">
-  <footer>
-    <xsl:apply-templates/>
-  </footer>
+<!-- ignore div -->
+<xsl:template match="xh:div"/>
+
+<!-- generate footer at the end -->
+<!-- TODO: needs fixing for header text -->
+<xsl:template name="generate-footer">
+  <xsl:for-each select="//xh:div">
+    <footer>
+      <xsl:apply-templates/>
+    </footer>
+  </xsl:for-each>
 </xsl:template>
 
 </xsl:stylesheet>
