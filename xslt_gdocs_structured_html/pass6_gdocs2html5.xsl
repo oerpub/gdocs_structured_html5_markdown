@@ -243,27 +243,27 @@ Pass1,2...4 transformation is a precondition for this pass.
       <xsl:if test="@title">
 
         <xsl:choose>
-          <xsl:when test="@level == 1">
+          <xsl:when test="@level = 1">
               <h1>
                 <xsl:apply-templates/>
               </h1>
           </xsl:when>
-          <xsl:when test="@level == 2">
+          <xsl:when test="@level = 2">
               <h2>
                 <xsl:apply-templates/>
               </h2>
           </xsl:when>
-          <xsl:when test="@level == 3">
+          <xsl:when test="@level = 3">
               <h3>
                 <xsl:apply-templates/>
               </h3>
           </xsl:when>
-          <xsl:when test="@level == 4">
+          <xsl:when test="@level = 4">
               <h4>
                 <xsl:apply-templates/>
               </h4>
           </xsl:when>
-          <xsl:when test="@level == 5">
+          <xsl:when test="@level = 5">
               <h5>
                 <xsl:apply-templates/>
               </h5>
