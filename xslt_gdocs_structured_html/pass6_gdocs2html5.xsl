@@ -63,22 +63,22 @@ Pass1,2...4 transformation is a precondition for this pass.
 
 <!-- paragraphs -->
 <xsl:template match="xh:p">
-  <para>
+  <p>
     <xsl:apply-templates/>
-  </para>
+  </p>
 </xsl:template>
 
 <!-- linebreaks -->
 <xsl:template match="xh:br">
   <xsl:choose>
     <xsl:when test="(ancestor::xh:p) or (ancestor::xh:li)">
-      <newline/>
+      <br/>
     </xsl:when>
     <xsl:otherwise>
       <!-- This should not happen! -->
-      <para>
-        <newline/>
-      </para>
+      <p>
+        <br/>
+      </p>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -237,17 +237,17 @@ Pass1,2...4 transformation is a precondition for this pass.
       <para><emphasis effect="bold"><xsl:apply-templates/></emphasis></para>
     </xsl:when>
     <xsl:otherwise>
-		  <!-- Check if header is empty, if yes, create no section -->
+      <!-- Check if header is empty, if yes, create no section -->
 
           <!-- TODO: nohtml:h without title should not happen -->
           <xsl:if test="@title">
-			  <section>
-			    <title>
-			      <xsl:value-of select="@title"/>
-			    </title>
-			    <xsl:apply-templates/>
-			  </section>
-		  </xsl:if>
+        <section>
+          <title>
+            <xsl:value-of select="@title"/>
+          </title>
+          <xsl:apply-templates/>
+        </section>
+      </xsl:if>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -405,36 +405,36 @@ Pass1,2...4 transformation is a precondition for this pass.
       <!-- internal link -->
       <xsl:when test="substring(@href, 1, 1) = '#'">
         <link>
-	        <xsl:attribute name="bookmark">
-	          <xsl:value-of select="@href"/>
-	        </xsl:attribute>
-	        <xsl:apply-templates/>
-	      </link>
+          <xsl:attribute name="bookmark">
+            <xsl:value-of select="@href"/>
+          </xsl:attribute>
+          <xsl:apply-templates/>
+        </link>
       </xsl:when>
       <!-- external link -->
       <xsl:otherwise>
-		    <link>
-		      <xsl:attribute name="url">
-		        <xsl:value-of select="@href"/> <!-- link url -->
- 		      </xsl:attribute>
-		      <!-- open external links default in new window if they are no emails-->
-		      <xsl:if test="not(starts-with(@href, 'mailto'))">
-		        <xsl:attribute name="window">new</xsl:attribute>
-		      </xsl:if>
-		      <xsl:apply-templates/>
-		    </link>
-	    </xsl:otherwise>
+        <link>
+          <xsl:attribute name="url">
+            <xsl:value-of select="@href"/> <!-- link url -->
+           </xsl:attribute>
+          <!-- open external links default in new window if they are no emails-->
+          <xsl:if test="not(starts-with(@href, 'mailto'))">
+            <xsl:attribute name="window">new</xsl:attribute>
+          </xsl:if>
+          <xsl:apply-templates/>
+        </link>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:if>
   <!-- create a "bookmark" for internal links -->
   <xsl:if test="@name">
-  	<nohtml:bookmark>
-  		<xsl:attribute name="name">
-  			<xsl:value-of select="@name"/>
-  		</xsl:attribute>
-  		<xsl:apply-templates/>
-  	</nohtml:bookmark>
-	</xsl:if>
+    <nohtml:bookmark>
+      <xsl:attribute name="name">
+        <xsl:value-of select="@name"/>
+      </xsl:attribute>
+      <xsl:apply-templates/>
+    </nohtml:bookmark>
+  </xsl:if>
 </xsl:template>
 
 <!-- images -->
@@ -454,10 +454,10 @@ Pass1,2...4 transformation is a precondition for this pass.
   </xsl:variable>
   <!-- Do not create a footnote if reference is a gdocs comment -->
   <xsl:if test="not(starts-with($reference, 'cmnt'))">
-	  <footnote>
-	    <xsl:apply-templates select="//xh:div[xh:p/xh:a[@name = $reference]]/xh:p/xh:span"/>
-	  </footnote>
-	</xsl:if>
+    <footnote>
+      <xsl:apply-templates select="//xh:div[xh:p/xh:a[@name = $reference]]/xh:p/xh:span"/>
+    </footnote>
+  </xsl:if>
 </xsl:template>
 
 <!-- Look for TeX Formulars from Google Chart Tools -->
