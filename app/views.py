@@ -26,7 +26,7 @@ def index():
         url = form.gdocs.data
         gdocs_dirty_html, kix = get_gdocs_from_url(url)
         transformed, objects = gdocs_to_html5(
-            gdocs_dirty_html, kixcontent=None, bDownloadImages=True, debug=True)
+            gdocs_dirty_html, kixcontent=None, bDownloadImages=True, debug=False)
         transform_markdown = html5_to_markdown(transformed)
         zipfilename = 'gdocshtml5-'+ time.strftime("%Y%m%d-%H%M%S") + '.zip'
         with ZipFile(file='./app/static/' + zipfilename, mode='w') as myzip:
