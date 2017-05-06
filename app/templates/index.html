@@ -10,7 +10,7 @@
         <p>
             {{ form.gdocs(size=80) }}
         </p>
-        <p><input type="submit" value="convert"></p>
+        <p><input class="btn btn-primary" type="submit" value="convert"></p>
     </form>
 
     {% with messages = get_flashed_messages() %}
@@ -20,6 +20,12 @@
     </ul>
     {% endif %}
 
+    <h2>ZIP archive download</h2>
+    {% if messages %}
+        <div class="btn-group">
+            <button class="btn btn-success btn-large" type="submit" onclick="window.open('{{ "/static/" + zipfile }}')"><b>Download HTML5 and Markdown and images!</b></button>
+        </div>
+    {% endif %}
     <h2>HTML Output</h2>
     {% if messages %}
     <pre>{{ gdocshtml }}</pre>
