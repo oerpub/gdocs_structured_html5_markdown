@@ -19,7 +19,7 @@ CURRENT_DIR = os.path.dirname(__file__)
 XHTML_ENTITIES = os.path.join(
     CURRENT_DIR, 'xslt_gdocs_structured_html', 'catalog_xhtml', 'catalog.xml')
 
-DOWNLOAD_FILES_FROM_GOOGLE = False
+download_files_from_google = False
 
 gmath_latex = []
 
@@ -192,7 +192,7 @@ def tex2mathml_transform(xml):
 
 # Download Google Docs Images
 def image_puller(xml):
-    if DOWNLOAD_FILES_FROM_GOOGLE:
+    if download_files_from_google:
       image_objects = {}
       etree_xml = etree.fromstring(xml)
       etree_xml, image_objects = download_images(etree_xml)
@@ -233,13 +233,14 @@ TRANSFORM_PIPELINE = [
 # the function which is called from outside to start transformation
 def gdocs_to_html5(content, kixcontent=None, bDownloadImages=False, debug=False):
     global gmath_latex
+    global download_files_from_google
     if (kixcontent==None):
         gmath_latex = []
     else:
         gmath_latex = extract_math_from_kix(kixcontent)
     objects = {}
     xml = content
-    DOWNLOAD_FILES_FROM_GOOGLE = bDownloadImages
+    download_files_from_google = bDownloadImages
     # write input file to debug dir
     if debug: # create for each pass an output file
         filename = os.path.join(CURRENT_DIR, 'gdocs_debug', 'input.htm') # TODO: needs a timestamp or something

@@ -50,7 +50,8 @@ Deprecated:
           <xsl:value-of select="@mime-type"/>
         </xsl:attribute>-->
         <xsl:attribute name="src">
-          <xsl:value-of select="@src"/>
+          <!--<xsl:value-of select="@src"/>-->
+          <xsl:value-of select="."/>
         </xsl:attribute>
         <xsl:if test="@height &gt; 0">
           <xsl:attribute name="height">
