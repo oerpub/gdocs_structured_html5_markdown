@@ -26,8 +26,8 @@ def index():
             gdocs_dirty_html, kixcontent=None, bDownloadImages=True, debug=True)
         transform_markdown = html5_to_markdown(transformed)
         with ZipFile(file='./app/static/test.zip', mode='w') as myzip:
-            myzip.writestr('gdocs_html5.htm', transformed)
-            myzip.writestr('gdocs_markdown.md', transform_markdown)
+            myzip.writestr('html5.htm', transformed)
+            myzip.writestr('markdown.md', transform_markdown.encode("UTF-8"))
             for image_filename, image in objects.iteritems():
                 myzip.writestr(image_filename, image)
         myzip.close()

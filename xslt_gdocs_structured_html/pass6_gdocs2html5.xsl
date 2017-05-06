@@ -410,7 +410,7 @@ Pass1,2...4 transformation is a precondition for this pass.
 
 <!-- table body -->
 <xsl:template match="xh:tbody">
-  <tbody>
+  <!--<tbody>-->
     <xsl:for-each select="xh:tr">
       <tr>
         <xsl:for-each select="xh:td">
@@ -420,7 +420,7 @@ Pass1,2...4 transformation is a precondition for this pass.
         </xsl:for-each>
       </tr>
     </xsl:for-each>
-  </tbody>
+  <!--</tbody>-->
 </xsl:template>
 
 <!-- links -->

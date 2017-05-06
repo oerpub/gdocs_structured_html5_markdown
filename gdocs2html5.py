@@ -276,7 +276,8 @@ def gdocs_to_html5(content, kixcontent=None, bDownloadImages=False, debug=False)
 def html5_to_markdown(html):
     h = html2text.HTML2Text()
     h.ignore_links = False
-    h.pad_tables = True
+    h.skip_internal_links = False
+    h.unicode_snob = True
     markdown = h.handle(html)
     return markdown
 
