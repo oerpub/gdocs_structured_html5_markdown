@@ -13,6 +13,7 @@ from xhtmlpremailer import xhtmlPremailer
 from lxml import etree
 import magic
 from functools import partial
+import html2text
 
 CURRENT_DIR = os.path.dirname(__file__)
 
@@ -271,6 +272,13 @@ def gdocs_to_html5(content, kixcontent=None, bDownloadImages=False, debug=False)
             finally:
                 image_file.close()
     return xml, objects
+
+def html5_to_markdown(html):
+    h = html2text.HTML2Text()
+    h.ignore_links = False
+    h.pad_tables = True
+    markdown = h.handle(html)
+    return markdown
 
 if __name__ == "__main__":
     f = open(sys.argv[1])

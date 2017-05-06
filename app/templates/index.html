@@ -22,10 +22,12 @@
 
     <h2>HTML Output</h2>
     {% if messages %}
-    <pre>{{ messages[1] }}</pre>
+    <pre>{{ gdocshtml }}</pre>
     {% endif %}
     <h2>Markdown Output</h2>
-    
+    {% if messages %}
+    <pre>{{ markdown }}</pre>
+    {% endif %}
     {% endwith %}
 
 {% endblock %}
