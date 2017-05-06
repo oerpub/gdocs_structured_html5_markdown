@@ -8,4 +8,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-app.run(debug=True)
+app.run(debug=True,
+        host=app.config.get("HOST", "localhost"),
+        port=app.config.get("PORT", 9000)
+        )
