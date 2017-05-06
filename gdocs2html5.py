@@ -278,6 +278,7 @@ def html5_to_markdown(html):
     h.ignore_links = False
     h.skip_internal_links = False
     h.unicode_snob = True
+    h.bypass_tables = True
     markdown = h.handle(html)
     return markdown
 
