@@ -1,15 +1,28 @@
 # Convert Google Documents HTML to structured well formed HTML
 
-## Setup
+## Ubuntu 16.04
 
-(optional) install VirtualEnv
+### Setup
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+### Usage
 
 ```bash
-python testbed_gdocs_simple_http.py
+python run.py
 ```
+
+Open web browser at `http://127.0.0.1:9000`
+
+## Alternative use VirtualBox + Vagrant setup
+
+```
+vagrant up
+vagrant ssh
+cd /vagrant
+python run.py
+```
+
+Open web browser at `http://127.0.0.1:9000`
